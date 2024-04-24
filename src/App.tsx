@@ -8,15 +8,17 @@ import {
 import { useHttp, useUpdateEffect } from "./hooks";
 import VehicleList from "./components/vehicleList/VehicleList";
 
-import "./App.scss";
 import SortVehicles from "./components/sortVehicles/SortVehicles";
 import Map from "./components/map/Map";
+import { Typography } from "@mui/material";
 
+import "./App.scss";
 function App() {
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
   const [sortBy, setSortBy] = useState<SortingTypes | "">("");
 
   const { loadingStatus, request } = useHttp();
+
   useEffect(() => {
     request({
       url: "https://test.tspb.su/test-task/vehicles",
@@ -24,15 +26,12 @@ function App() {
   }, []);
 
   const handleDeleteVehicle = (id: number) => {
-    const state = [...vehicles];
-    const updatedState = state.filter((item) => item.id !== id);
+    const updatedState = vehicles.filter((vehicle) => vehicle.id !== id);
     setVehicles(updatedState);
   };
 
   const handleUpdateVehicle = (id: number, payload: IUpdateVehiclePayload) => {
-    const state = [...vehicles];
-
-    const updatedState = state.map((vehicle) => {
+    const updatedState = vehicles.map((vehicle) => {
       if (vehicle.id === id) {
         vehicle = { ...vehicle, ...payload };
       }
@@ -44,6 +43,7 @@ function App() {
   };
 
   const handleSortVehicles = (type: SortingTypes) => {
+    if (vehicles.length === 0) return;
     switch (type) {
       case "PriceHighToLow":
         setVehicles((prevState) => {
@@ -97,28 +97,35 @@ function App() {
   });
 
   return (
-    <main>
-      <div className="container">
-        <section>
-          <Map markers={markers ?? []} />
-        </section>
-        <section>
-          <SortVehicles
-            handleSortVehicles={handleSortVehicles}
-            setSortBy={setSortBy}
-            sortBy={sortBy}
-          />
-        </section>
-        <section>
-          <VehicleList
-            loadingStatus={loadingStatus}
-            handleUpdateVehicle={handleUpdateVehicle}
-            handleDeleteVehicle={handleDeleteVehicle}
-            vehicles={vehicles}
-          />
-        </section>
-      </div>
-    </main>
+    <>
+      <main>
+        <div className="container">
+          <Typography marginTop="2rem" textAlign="center" variant="h3">
+            Тестовое задание
+          </Typography>
+          <section>
+            <Map markers={markers ?? []} />
+          </section>
+          <section>
+            <SortVehicles
+              handleSortVehicles={handleSortVehicles}
+              setSortBy={setSortBy}
+              sortBy={sortBy}
+            />
+          </section>
+          <section>
+            <VehicleList
+              loadingStatus={loadingStatus}
+              handleUpdateVehicle={handleUpdateVehicle}
+              handleDeleteVehicle={handleDeleteVehicle}
+              vehicles={vehicles}
+            />
+          </section>
+        </div>
+      </main>
+
+      <footer className="footer" />
+    </>
   );
 }
 

@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, memo, useState } from "react";
 import { IUpdateVehiclePayload, IVehicle } from "../../types";
 
-import "./vehicleCard.scss";
 import {
   Box,
   Button,
@@ -16,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 
+import "./vehicleCard.scss";
 type VehicleCardProps = {
   vehicle: IVehicle;
   deleteVehicle: (id: number) => void;
@@ -24,7 +24,8 @@ type VehicleCardProps = {
 
 const VehicleCard = memo(
   ({ vehicle, deleteVehicle, updateVehicle }: VehicleCardProps) => {
-    const { id, name, model, year, color, price } = vehicle;
+    const { id, name, model, year, color, price, latitude, longitude } =
+      vehicle;
 
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
@@ -74,6 +75,8 @@ const VehicleCard = memo(
             <Typography>Год производства: {year}</Typography>
             <Typography>Цвет: {color}</Typography>
             <Typography>Цена: {price}$</Typography>
+            <Typography>Широта: {latitude}</Typography>
+            <Typography>Долгота: {longitude}</Typography>
           </CardContent>
           <CardActions sx={{ justifyContent: "space-around" }}>
             <Button onClick={() => setIsOpenModal(true)}>Изменить</Button>
@@ -83,7 +86,7 @@ const VehicleCard = memo(
           </CardActions>
         </Card>
         <Dialog open={isOpenModal} onClose={handleModalClose}>
-          <DialogTitle>Редактировать карточку</DialogTitle>
+          <DialogTitle>Редактировать автомобиль</DialogTitle>
           <DialogContent>
             <Box
               sx={{

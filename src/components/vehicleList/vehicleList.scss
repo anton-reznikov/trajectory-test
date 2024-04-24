@@ -4,5 +4,8 @@
   column-gap: 2rem;
   row-gap: 3rem;
   justify-content: center;
-  padding-bottom: 100px;
+  &-empty {
+    grid-column-start: 1;
+    grid-column-end: max;
+  }
 }

@@ -7,7 +7,9 @@ import {
 } from "react";
 
 type HTTPRequestMethods = "GET" | "POST" | "PATCH" | "DELETE";
+
 export type loadingStatusOptions = "idle" | "loading" | "error";
+
 interface HTTPHeaders {
   [key: string]: string;
 }

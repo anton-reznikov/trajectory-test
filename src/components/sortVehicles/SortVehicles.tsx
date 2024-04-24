@@ -21,26 +21,23 @@ const SortVehicles = ({ sortBy, setSortBy }: SortVehiclesProps) => {
     setSortBy(event.target.value as SortingTypes);
   };
   return (
-    <div className="container" style={{ marginTop: "3rem" }}>
-      <Box display="flex" justifyContent="center" marginBottom="2rem">
-        <FormControl sx={{ width: "100%", maxWidth: "300px" }}>
-          <InputLabel id="selectSorting">Сортировка</InputLabel>
-          <Select
-            labelId="selectSorting"
-            id="demo-simple-select"
-            value={sortBy}
-            label="Сортировка"
-            onChange={handleChange}
-          >
-            {sortingVariants.map((variant) => (
-              <MenuItem key={variant.id} value={variant.value}>
-                {variant.text}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-    </div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      marginBottom="2rem"
+      marginTop="3rem"
+    >
+      <FormControl sx={{ width: "100%", maxWidth: "300px" }}>
+        <InputLabel>Сортировка</InputLabel>
+        <Select value={sortBy} label="Сортировка" onChange={handleChange}>
+          {sortingVariants.map((variant) => (
+            <MenuItem key={variant.id} value={variant.value}>
+              {variant.text}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 
